@@ -95,7 +95,7 @@ html = r"""
 #ROOT_ID .theme {
     background:linear-gradient(135deg,#8b6cff,#5a3fd4);
     position:absolute;
-    top:clamp(8px,1.5vw,16px);
+    top:clamp(32px,1.5vw,16px);
     right:clamp(8px,1.5vw,16px);
     padding:8px 14px;
     font-size:clamp(12px,1.3vw,14px);
@@ -802,7 +802,7 @@ function drawWaves(){
     dot(T.cos,Math.cos(angle));
 
     // Legend (rounded box with solid background)
-    roundRect(w,455,47,115,52,8);
+    roundRect(w,460,47,108,52,8);
     w.fillStyle=T.legendBg;
     w.fill();
 
