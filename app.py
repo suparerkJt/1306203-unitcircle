@@ -764,9 +764,9 @@ function drawWaves(){
     // Moving cursor
     const px=X(time);
 
-    w.strokeStyle=T.radius;
-    w.lineWidth=1.8;
-    w.setLineDash([5,5]);
+    # w.strokeStyle=T.radius;
+    # w.lineWidth=1.8;
+    # w.setLineDash([5,5]);
 
     w.beginPath();
     w.moveTo(px,top);
