@@ -437,16 +437,6 @@ function drawCircle(){
     const px=cx+R*x;
     const py=cy-R*y;
 
-    // Shaded disc
-    const disc=c.createRadialGradient(cx,cy,0,cx,cy,R);
-    disc.addColorStop(0,T.discInner);
-    disc.addColorStop(1,T.discOuter);
-
-    c.fillStyle=disc;
-    c.beginPath();
-    c.arc(cx,cy,R,0,2*Math.PI);
-    c.fill();
-
     // Half-radius guide ring
     c.strokeStyle=T.grid;
     c.lineWidth=1;
@@ -492,13 +482,6 @@ function drawCircle(){
     const a=((angle%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
 
     if(a>0.001){
-
-        c.fillStyle=T.wedge;
-        c.beginPath();
-        c.moveTo(cx,cy);
-        c.arc(cx,cy,42,0,-a,true);
-        c.closePath();
-        c.fill();
 
         c.strokeStyle=T.radius;
         c.lineWidth=1.8;
@@ -643,10 +626,6 @@ function drawWaves(){
 
     w.clearRect(0,0,600,450);
 
-    // Plot-area panel
-    w.fillStyle=T.plotBg;
-    w.fillRect(left,top,right-left,bottom-top);
-
     // Vertical time grid
     const rawInterval=(end-start)/8;
 
@@ -730,7 +709,7 @@ function drawWaves(){
     w.fillText("Amplitude",0,0);
     w.restore();
 
-    // Draw waveforms (shaded area + glowing line)
+    // Draw waveforms (glowing line)
     function trace(fn){
 
         for(let i=0;i<=800;i++){
@@ -746,15 +725,6 @@ function drawWaves(){
     }
 
     function plot(color,fillColor,fn){
-
-        // Shaded area between the wave and zero line
-        w.beginPath();
-        trace(fn);
-        w.lineTo(X(end),Y(0));
-        w.lineTo(X(start),Y(0));
-        w.closePath();
-        w.fillStyle=fillColor;
-        w.fill();
 
         // Wave line with glow
         w.save();
