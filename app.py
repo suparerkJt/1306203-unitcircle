@@ -563,9 +563,9 @@ function drawWaves(){
     w.fillStyle="white";
     w.fillRect(455,47,115,52);
 
-    w.strokeStyle="#aaa";
-    w.lineWidth=1;
-    w.strokeRect(455,47,115,52);
+    # w.strokeStyle="#aaa";
+    # w.lineWidth=1;
+    # w.strokeRect(455,47,115,52);
 
     w.textAlign="left";
     w.font="13px Arial";
