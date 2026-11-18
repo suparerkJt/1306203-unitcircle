@@ -559,7 +559,14 @@ function drawWaves(){
     dot("#159447",Math.sin(angle));
     dot("#1769c2",Math.cos(angle));
 
-    // Legend
+    // Legend (white background box)
+    w.fillStyle="white";
+    w.fillRect(455,47,115,52);
+
+    w.strokeStyle="#aaa";
+    w.lineWidth=1;
+    w.strokeRect(455,47,115,52);
+
     w.textAlign="left";
     w.font="13px Arial";
 
