@@ -4,7 +4,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 st.set_page_config(
-    page_title="Unit Circle & Sinusoidal Signals",
+    page_title="1306203/Unit Circle & Sinusoids",
     layout="wide",
 )
 
@@ -284,7 +284,7 @@ html = r"""
 
 <button class="theme" id="theme">🌙 DARK MODE</button>
 
-<h2>Unit Circle & Sinusoidal Signals</h2>
+<h2>1306203 Signals & Systems: Unit Circle & Sinusoids</h2>
 
 <!-- FIRST ROW: MAIN CONTROLS -->
 
