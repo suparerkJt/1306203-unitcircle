@@ -32,6 +32,7 @@ html = r"""
     padding:clamp(8px, 2vw, 24px);
     box-sizing:border-box;
     font-family:Arial,sans-serif;
+    position:relative;
     color:#1f2a44;
     background:linear-gradient(160deg,#f7f9ff 0%,#eaf0fc 100%);
     border-radius:18px;
@@ -91,7 +92,15 @@ html = r"""
 #ROOT_ID .pause {background:linear-gradient(135deg,#f0b429,#cf8a00);}
 #ROOT_ID .reset {background:linear-gradient(135deg,#6b7488,#454c5e);}
 #ROOT_ID .step  {background:linear-gradient(135deg,#3b82f6,#1a56c4);}
-#ROOT_ID .theme {background:linear-gradient(135deg,#8b6cff,#5a3fd4);}
+#ROOT_ID .theme {
+    background:linear-gradient(135deg,#8b6cff,#5a3fd4);
+    position:absolute;
+    top:clamp(8px,1.5vw,16px);
+    right:clamp(8px,1.5vw,16px);
+    padding:8px 14px;
+    font-size:clamp(12px,1.3vw,14px);
+    z-index:2;
+}
 
 #ROOT_ID .parameters {
     display:flex;
@@ -233,6 +242,14 @@ html = r"""
         padding:6px;
     }
 
+    #ROOT_ID h2 {
+        margin-top:46px;
+    }
+
+    #ROOT_ID .theme {
+        padding:7px 11px;
+    }
+
     #ROOT_ID .graphs {
         flex-direction:column;
         align-items:center;
@@ -265,6 +282,8 @@ html = r"""
 }
 </style>
 
+<button class="theme" id="theme">🌙 DARK MODE</button>
+
 <h2>Unit Circle & Sinusoidal Signals</h2>
 
 <!-- FIRST ROW: MAIN CONTROLS -->
@@ -276,8 +295,6 @@ html = r"""
 <button class="pause" id="pause">Ⅱ PAUSE</button>
 
 <button class="reset" id="reset">↺ RESET</button>
-
-<button class="theme" id="theme">🌙 DARK MODE</button>
 
 </div>
 
