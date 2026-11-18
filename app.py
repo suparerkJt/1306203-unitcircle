@@ -95,7 +95,7 @@ html = r"""
 #ROOT_ID .theme {
     background:linear-gradient(135deg,#8b6cff,#5a3fd4);
     position:absolute;
-    top:clamp(32px,1.5vw,16px);
+    top:clamp(24px,3vw,36px);
     right:clamp(8px,1.5vw,16px);
     padding:8px 14px;
     font-size:clamp(12px,1.3vw,14px);
@@ -243,7 +243,7 @@ html = r"""
     }
 
     #ROOT_ID h2 {
-        margin-top:46px;
+        margin-top:64px;
     }
 
     #ROOT_ID .theme {
@@ -764,9 +764,9 @@ function drawWaves(){
     // Moving cursor
     const px=X(time);
 
-    # w.strokeStyle=T.radius;
-    # w.lineWidth=1.8;
-    # w.setLineDash([5,5]);
+    w.strokeStyle=T.radius;
+    w.lineWidth=1.8;
+    w.setLineDash([5,5]);
 
     w.beginPath();
     w.moveTo(px,top);
@@ -802,13 +802,9 @@ function drawWaves(){
     dot(T.cos,Math.cos(angle));
 
     // Legend (rounded box with solid background)
-    roundRect(w,460,47,108,52,8);
+    roundRect(w,455,47,115,52,8);
     w.fillStyle=T.legendBg;
     w.fill();
-
-    w.strokeStyle=T.legendBorder;
-    w.lineWidth=1;
-    w.stroke();
 
     w.textAlign="left";
     w.font="bold 13px Arial";
