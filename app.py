@@ -140,6 +140,28 @@ html = r"""
     max-width:600px;
 }
 
+/* Dark mode */
+#ROOT_ID.dark {
+    background:#0d1117;
+    color:#e6e6e6;
+    border-radius:12px;
+}
+
+#ROOT_ID.dark .graph {
+    background:#161b22;
+    border-color:#444;
+}
+
+#ROOT_ID.dark .parameter input {
+    background:#0d1117;
+    color:#e6e6e6;
+    border-color:#555;
+}
+
+#ROOT_ID.dark .status {
+    color:#e6e6e6;
+}
+
 /* Tablet */
 @media (max-width:850px) {
     #ROOT_ID .graphs {
@@ -204,6 +226,8 @@ html = r"""
 <button class="pause" id="pause">Ⅱ PAUSE</button>
 
 <button class="reset" id="reset">↺ RESET</button>
+
+<button class="reset" id="theme">🌙 DARK MODE</button>
 
 </div>
 
@@ -285,6 +309,43 @@ const cy=215;
 const R=155;
 
 // ======================================
+// THEMES (light / dark)
+// ======================================
+
+const themes={
+    light:{text:"#222",axis:"#999",circle:"#222",radius:"red",
+           cosProj:"blue",sinProj:"green",center:"black",
+           cos:"#1769c2",sin:"#159447",grid:"#ddd",zero:"#888",
+           tick:"#333",axisLine:"#333",
+           legendBg:"white",legendBorder:"#aaa"},
+    dark:{text:"#e6e6e6",axis:"#8b949e",circle:"#e6e6e6",radius:"#ff5c5c",
+          cosProj:"#58a6ff",sinProj:"#3ddc84",center:"#ffffff",
+          cos:"#58a6ff",sin:"#3ddc84",grid:"#30363d",zero:"#8b949e",
+          tick:"#c9d1d9",axisLine:"#c9d1d9",
+          legendBg:"#0d1117",legendBorder:"#555"}
+};
+
+let darkMode=!!(window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches);
+let T=themes.light;
+const themeBtn=root.querySelector("#theme");
+
+function applyTheme(){
+    T=darkMode?themes.dark:themes.light;
+    root.classList.toggle("dark",darkMode);
+    document.body.style.background=darkMode?"#0d1117":"transparent";
+    themeBtn.textContent=darkMode?"☀ LIGHT MODE":"🌙 DARK MODE";
+}
+
+themeBtn.addEventListener("click",function(){
+    darkMode=!darkMode;
+    applyTheme();
+    render();
+});
+
+applyTheme();
+
+// ======================================
 // PARAMETERS
 // ======================================
 
@@ -319,7 +380,7 @@ function drawCircle(){
     const py=cy-R*y;
 
     // Coordinate axes
-    c.strokeStyle="#999";
+    c.strokeStyle=T.axis;
     c.lineWidth=1;
 
     c.beginPath();
@@ -330,7 +391,7 @@ function drawCircle(){
     c.stroke();
 
     // Unit circle
-    c.strokeStyle="#222";
+    c.strokeStyle=T.circle;
     c.lineWidth=2;
 
     c.beginPath();
@@ -338,7 +399,7 @@ function drawCircle(){
     c.stroke();
 
     // Radius
-    c.strokeStyle="red";
+    c.strokeStyle=T.radius;
     c.lineWidth=3;
 
     c.beginPath();
@@ -347,7 +408,7 @@ function drawCircle(){
     c.stroke();
 
     // Cosine projection
-    c.strokeStyle="blue";
+    c.strokeStyle=T.cosProj;
     c.setLineDash([6,5]);
 
     c.beginPath();
@@ -356,7 +417,7 @@ function drawCircle(){
     c.stroke();
 
     // Sine projection
-    c.strokeStyle="green";
+    c.strokeStyle=T.sinProj;
 
     c.beginPath();
     c.moveTo(px,py);
@@ -366,19 +427,19 @@ function drawCircle(){
     c.setLineDash([]);
 
     // Moving point
-    c.fillStyle="red";
+    c.fillStyle=T.radius;
     c.beginPath();
     c.arc(px,py,9,0,2*Math.PI);
     c.fill();
 
     // Center
-    c.fillStyle="black";
+    c.fillStyle=T.center;
     c.beginPath();
     c.arc(cx,cy,4,0,2*Math.PI);
     c.fill();
 
     // Labels
-    c.fillStyle="#222";
+    c.fillStyle=T.text;
     c.font="15px Arial";
 
     c.fillText("UNIT CIRCLE",145,22);
@@ -387,13 +448,13 @@ function drawCircle(){
     c.fillText("180°",cx-R-45,cy+5);
     c.fillText("270°",cx-25,cy+R+20);
 
-    c.fillStyle="red";
+    c.fillStyle=T.radius;
     c.fillText("P",px+12,py-10);
 
-    c.fillStyle="#1769c2";
+    c.fillStyle=T.cos;
     c.fillText("cos(θ)",px+8,cy+20);
 
-    c.fillStyle="#159447";
+    c.fillStyle=T.sin;
     c.fillText("sin(θ)",cx-65,py-10);
 
     c.fillStyle="#e67e22";
@@ -451,7 +512,7 @@ function drawWaves(){
 
         const xx=X(t);
 
-        w.strokeStyle="#ddd";
+        w.strokeStyle=T.grid;
         w.lineWidth=1;
 
         w.beginPath();
@@ -459,7 +520,7 @@ function drawWaves(){
         w.lineTo(xx,bottom);
         w.stroke();
 
-        w.fillStyle="#333";
+        w.fillStyle=T.tick;
         w.fillText(t.toFixed(2),xx,bottom+18);
     }
 
@@ -472,7 +533,7 @@ function drawWaves(){
 
         const yy=Y(v);
 
-        w.strokeStyle=(v===0)?"#888":"#ddd";
+        w.strokeStyle=(v===0)?T.zero:T.grid;
         w.lineWidth=(v===0)?1.5:1;
 
         w.beginPath();
@@ -480,12 +541,12 @@ function drawWaves(){
         w.lineTo(right,yy);
         w.stroke();
 
-        w.fillStyle="#333";
+        w.fillStyle=T.tick;
         w.fillText(v.toFixed(1),left-10,yy+4);
     });
 
     // Axes
-    w.strokeStyle="#333";
+    w.strokeStyle=T.axisLine;
     w.lineWidth=1.5;
 
     w.beginPath();
@@ -494,7 +555,7 @@ function drawWaves(){
     w.lineTo(right,bottom);
     w.stroke();
 
-    w.fillStyle="#222";
+    w.fillStyle=T.text;
     w.textAlign="center";
     w.font="14px Arial";
 
@@ -528,13 +589,13 @@ function drawWaves(){
         w.stroke();
     }
 
-    plot("#159447",Math.sin);
-    plot("#1769c2",Math.cos);
+    plot(T.sin,Math.sin);
+    plot(T.cos,Math.cos);
 
     // Moving cursor
     const px=X(time);
 
-    w.strokeStyle="red";
+    w.strokeStyle=T.radius;
     w.lineWidth=1.8;
     w.setLineDash([5,5]);
 
@@ -556,24 +617,24 @@ function drawWaves(){
         w.fill();
     }
 
-    dot("#159447",Math.sin(angle));
-    dot("#1769c2",Math.cos(angle));
+    dot(T.sin,Math.sin(angle));
+    dot(T.cos,Math.cos(angle));
 
     // Legend (white background box)
-    w.fillStyle="white";
+    w.fillStyle=T.legendBg;
     w.fillRect(455,47,115,52);
 
-    # w.strokeStyle="#aaa";
-    # w.lineWidth=1;
-    # w.strokeRect(455,47,115,52);
+    w.strokeStyle=T.legendBorder;
+    w.lineWidth=1;
+    w.strokeRect(455,47,115,52);
 
     w.textAlign="left";
     w.font="13px Arial";
 
-    w.fillStyle="#159447";
+    w.fillStyle=T.sin;
     w.fillText("● Sine",465,65);
 
-    w.fillStyle="#1769c2";
+    w.fillStyle=T.cos;
     w.fillText("● Cosine",465,85);
 }
 
